@@ -18,7 +18,6 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard(height = HEIGHT, width = WIDTH) {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   for (let y = 0; y < height; y++) {
     let tempRow = [];
     for (let x = 0; x < width; x++) {
@@ -31,45 +30,33 @@ function makeBoard(height = HEIGHT, width = WIDTH) {
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard(height = HEIGHT, width = WIDTH) {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.querySelector("#board");
 
-  // TODO: create the first row, setting an ID of column-top,
-  //adding event listener to row
-  let top = document.createElement("tr");
+  const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
 
-  // TODO: looping through the top row
   //creating a td element, appending to tr
   //setting id of td as x (position)
   //appending the row to htmlBoard
-  for (let x = 0; x < WIDTH; x++) {
-    let headCell = document.createElement("td");
+  for (let x = 0; x < width; x++) {
+    const headCell = document.createElement("td");
     headCell.setAttribute("id", x);
     top.append(headCell);
   }
   htmlBoard.append(top);
 
   // dynamically creates the main part of html board
-  // uses HEIGHT to create table rows
-  // uses WIDTH to create table cells for each row
+  // uses HEIGHT to create table rows (y)
+  // uses WIDTH to create table cells for each row (x)
   for (let y = 0; y < height; y++) {
-    // TODO: Create a table row element and assign to a "row" variable
-    let row = document.createElement("tr");
+    const row = document.createElement("tr");
 
     for (let x = 0; x < width; x++) {
-      // TODO: Create a table cell element and assign to a "cell" variable
-      let cell = document.createElement("td");
-
-      // TODO: add an id, y-x, to the above table cell element
-      // you'll use this later, so make sure you use y-x
+      const cell = document.createElement("td");
       cell.setAttribute("id", `${y}-${x}`);
-
-      // TODO: append the table cell to the table row
       row.append(cell);
     }
-    // TODO: append the row to the html board
     htmlBoard.append(row);
   }
 }
@@ -85,6 +72,10 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  const piece = document.createElement("div");
+  piece.setAttribute("class", `piece p${currPlayer}`);
+  const cell = document.getElementById(`${y}-${x}`);
+  cell.append(piece);
 }
 
 /** endGame: announce game end */
