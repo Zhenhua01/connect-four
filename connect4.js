@@ -1,7 +1,6 @@
 "use strict";
 
 /** Connect Four
- *
  * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
@@ -37,8 +36,8 @@ function makeHtmlBoard(height = HEIGHT, width = WIDTH) {
   top.addEventListener("click", handleClick);
 
   //creating a td element, appending to tr
-  //setting id of td as x (position)
-  //appending the row to htmlBoard
+  //setting id of td elements as x (position)
+  //appending the top row to htmlBoard
   for (let x = 0; x < width; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", x);
@@ -92,6 +91,7 @@ function endGame(msg) {
 function handleClick(evt) {
   // get x from ID of clicked cell
   const x = +evt.target.id;
+
   // get next spot in column (if none, ignore click)
   const y = findSpotForCol(x);
   if (y === null) {
@@ -104,17 +104,16 @@ function handleClick(evt) {
 
   // check for win
   if (checkForWin()) {
-    setTimeout(endGame, 500, `Player ${currPlayer} won`);
+    setTimeout(endGame, 10, `Player ${currPlayer} won!`);
   }
 
   // check for tie
-  if (board.flat().every(currentValue => currentValue === 1 || currentValue === 2)) {
-    setTimeout(endGame, 500, `Well done, it's a tie!`);
+  if (board.flat().every(value => value)) {
+    setTimeout(endGame, 10, `Well done, it's a tie!`);
   }
 
   // switch players
   currPlayer = currPlayer === 1 ? 2 : 1;
-
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -149,10 +148,10 @@ function checkForWin() {
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
 
-      let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
-      let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
+      const vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
